@@ -1,0 +1,80 @@
+C:\Keil\ARM\BIN\CO-RV.LNT
+
+-iC:\Keil\ARM\INC\
+-ic:\Keil\ARM\RV31\INC
+-ic:\Keil\ARM\ARMCC\include
+-iC:\Keil\ARM\CMSIS\Include
+
+
++fdi
++macros // Double maximum allowed macro size
+-w2
+-wlib(2)
+
+-e46 // Field type should be _Bool, unsigned int or signed int 
+-e451 // Header included repeatedly but does not have a standard include guard
+-e514 // Unusual use of a Boolean expression
+-e537 // Repeated include file
+-e620 // Suspicious constant (L or one?)
+-e760 // Redundant macro defined identically
+-e793 // ANSI/ISO limit of "31 characters in a name" / "4095 macros in module" exceeded
+
++v
+
++rw(_gobble)                 // activate the _gobble keyword, causes _gobble token to be both ignored
+-d__nop()=_gobble            // defined to be a _gobble
+-d__isr=_gobble              // defined to be a _gobble
+-d__fiq=_gobble              // defined to be a _gobble
+-d__task=_gobble             // defined to be a _gobble
+-d__at=_gobble               // defined to be a _gobble
+-d__arm=_gobble              // defined to be a _gobble
+-d__thumb=_gobble            // defined to be a _gobble
+-d__ram=_gobble              // defined to be a _gobble
+-d__return_address()=_gobble // defined to be a _gobble
+-d__svc()=                   // defined to be compiler extension
+-d__nop()=                   // defined to be compiler extension
+-d__wfi()=                   // defined to be compiler extension
+-d__wfe()=                   // defined to be compiler extension
+-d__sev()=                   // defined to be compiler extension  (BLE addition)
+-d__dmb()=                   // defined to be compiler extension
+-d__enable_irq()=            // defined to be compiler extension
+-d__disable_irq()=           // defined to be compiler extension
+-d__asm__()=                // define to be a compiler extension
+
++rw(__asm)                   // activate this keyword
++rw(__weak)                  // activate this keyword
+
++rw(_ignore_init)            // activate this keyword
++rw(__declspec)              // activate this MS keyword
+
++ppw(warning)  // set #warning as a valid preprocessor directive.
+
+-efunc(716, main) // main function can have while (1) loop
+
+-elibmacro(835) // A zero has been given as right argument to operator '<<'"
+
+-esym(765,*_IRQHandler) // Could be made static
+-esym(714,*_IRQHandler) // Not referenced
+
+-e740 // Unusual pointer cast (incompatible indirect types)
+
+// Define _AEABI_PORTABILITY_LEVEL and __DEFAULT_AEABI_PORTABILITY_LEVEL for Lint.
+// See http://infocenter.arm.com/help/topic/com.arm.doc.dui0349c/CJAIFJGA.html for more info.
+-d_AEABI_PORTABILITY_LEVEL=0
+-d__DEFAULT_AEABI_PORTABILITY_LEVEL=0
+
+-d__GNUC__=0
+
+// BLE additional settings
+-e641                        // Converting enum to int                                [We use enums for (named) limited range numerics]
+-e522                        // Highest function 'Name' lacks side-effects            [In our context this is practially always a false warning]
+-epuc                        // Treat "string literals" as unsigned char
+-e506                        // Constant value Boolean.
+-e613                        // Possible use of null pointer in argument. 
+
+-esym(578,static_assert_failed) // Declaration of symbol 'static_assert_failed' hides symbol 'static_assert_failed'
+
+-esym(526,__current_sp)      // __current_sp is an ARM intrinsic function only know by the compiler, thus Lint will issue a warning when using this function, even though it's valid. 
+-esym(628,__current_sp)      // __current_sp is an ARM intrinsic function only know by the compiler, thus Lint will issue a warning when using this function, even though it's valid.
+
+-e695                   // Inline function defined without a stroage class specifier (Keil's inlining ignores this).
